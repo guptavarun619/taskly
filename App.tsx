@@ -1,30 +1,56 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
-import { theme } from "./theme";
+import { View, StyleSheet } from "react-native";
+import { ShoppingListItem } from "./components/ShoppingListItem";
+import { useState } from "react";
+
+const initialList = [
+  {
+    id: 1,
+    name: "Coffee",
+    completed: false,
+  },
+  {
+    id: 2,
+    name: "Sugar",
+    completed: false,
+  },
+  {
+    id: 3,
+    name: "Cookie",
+    completed: false,
+  },
+];
 
 const App = () => {
-  const handleDelete = () => {
-    Alert.alert("Are you sure you want to delete this", "It'l be deleted for sure", [{
-      text: "Sure",
-      onPress: () => console.log('Deleted!'),
-      style: "destructive",
-    }, {
-      text: "Cancel",
-      style: "cancel",
-    }]);
-  }
+  const [list, setList] = useState(initialList);
+
+  const deleteItemById = (id: number) => {
+    const newList = list.filter((item) => item.id !== id);
+    setList(newList);
+  };
+
+  const toggleStatusById = (id: number) => {
+    const newList = list.map((item) => {
+      if (item.id === id) return { ...item, completed: !item.completed };
+      return item;
+    });
+    setList(newList);
+  };
 
   return (
     <View style={styles.container}>
-      
-      <View style={styles.itemContainer}>
-        <Text style={styles.itemText}> Coffee Latte</Text>
-        <TouchableOpacity onPress={handleDelete} activeOpacity={0.8} style={styles.button}>
-          <Text style={styles.buttonText}>Delete</Text>
-        </TouchableOpacity>
-      </View>
+      {list.map((item) => (
+        <ShoppingListItem
+          name={item.name}
+          completed={item.completed}
+          id={item.id}
+          key={item.id}
+          toggleStatusById={toggleStatusById}
+          deleteItemById={deleteItemById}
+        />
+      ))}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -32,28 +58,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "center",
   },
-  itemContainer: {
-    borderBottomWidth: 1,
-    margin: 16,
-    paddingHorizontal: 8,
-    paddingVertical: 16,
-    borderRadius: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  itemText: { fontSize: 18, fontWeight: '200'},
-  button: {
-    backgroundColor: theme.colorBlack,
-    padding: 8,
-    borderRadius: 6, 
-  },
-  buttonText: {
-    color: theme.colorWhite,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  }
 });
 
 export default App;
