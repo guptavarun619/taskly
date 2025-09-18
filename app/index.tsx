@@ -1,6 +1,7 @@
 import { View, StyleSheet } from "react-native";
-import { ShoppingListItem } from "./components/ShoppingListItem";
+import { ShoppingListItem } from "../components/ShoppingListItem";
 import { useState } from "react";
+import { Link } from "expo-router";
 
 const initialList = [
   {
