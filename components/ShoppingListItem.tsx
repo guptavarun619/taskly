@@ -5,7 +5,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 
 type Props = {
   name: string;
-  id: number;
+  id: string;
   completed: boolean;
   deleteItemById: Function;
   toggleStatusById: Function;

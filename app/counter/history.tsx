@@ -1,10 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { theme } from "../theme";
+import { StyleSheet, Text, View } from "react-native";
+import { theme } from "../../theme";
 
-export default function CounterScreen() {
+export default function HistoryScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Counter</Text>
+      <Text style={styles.text}>History Screen</Text>
     </View>
   );
 }

@@ -1,9 +1,10 @@
 import { Tabs } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { theme } from "../theme";
 
 export default function Layout() {
   return (
-    <Tabs>
+    <Tabs screenOptions={{ tabBarActiveTintColor: theme.colorCerulean }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -19,8 +20,9 @@ export default function Layout() {
         name="counter"
         options={{
           title: "Counter",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => {
-            return <AntDesign name="clock-circle" size={24} color="black" />;
+            return <AntDesign name="clock-circle" size={size} color={color} />;
           },
         }}
       />
