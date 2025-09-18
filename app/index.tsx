@@ -1,7 +1,6 @@
-import { View, StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, ScrollView } from "react-native";
 import { ShoppingListItem } from "../components/ShoppingListItem";
 import { useState } from "react";
-import { Link } from "expo-router";
 import { theme } from "../theme";
 
 const initialList = [
@@ -49,7 +48,11 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      stickyHeaderIndices={[0]}
+    >
       <TextInput
         placeholder="E.g. Coffee"
         style={styles.textInput}
@@ -71,7 +74,7 @@ const App = () => {
           deleteItemById={deleteItemById}
         />
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -79,9 +82,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: 12,
+    padding: 12,
     // justifyContent: "center",
   },
+  contentContainer: { paddingBottom: 24 },
   textInput: {
     borderColor: theme.colorLightGrey,
     borderWidth: 2,
@@ -90,6 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     fontSize: 18,
     borderRadius: 50,
+    backgroundColor: theme.colorWhite,
   },
 });
 
