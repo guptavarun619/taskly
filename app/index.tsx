@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, ScrollView } from "react-native";
+import { StyleSheet, TextInput, FlatList, Text, View } from "react-native";
 import { ShoppingListItem } from "../components/ShoppingListItem";
 import { useState } from "react";
 import { theme } from "../theme";
@@ -48,33 +48,41 @@ const App = () => {
   };
 
   return (
-    <ScrollView
+    <FlatList
+      data={list}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       stickyHeaderIndices={[0]}
-    >
-      <TextInput
-        placeholder="E.g. Coffee"
-        style={styles.textInput}
-        value={taskInput}
-        onChangeText={setTaskInput}
-        returnKeyType="done"
-        onSubmitEditing={(e) => {
-          addTask(e.nativeEvent.text);
-          setTaskInput("");
-        }}
-      />
-      {list.map((item) => (
-        <ShoppingListItem
-          name={item.name}
-          completed={item.completed}
-          id={item.id}
-          key={item.id}
-          toggleStatusById={toggleStatusById}
-          deleteItemById={deleteItemById}
+      ListEmptyComponent={() => (
+        <View style={styles.emptyContainer}>
+          <Text>Your List is empty</Text>
+        </View>
+      )}
+      ListHeaderComponent={
+        <TextInput
+          placeholder="E.g. Coffee"
+          style={styles.textInput}
+          value={taskInput}
+          onChangeText={setTaskInput}
+          returnKeyType="done"
+          onSubmitEditing={(e) => {
+            addTask(e.nativeEvent.text);
+            setTaskInput("");
+          }}
         />
-      ))}
-    </ScrollView>
+      }
+      renderItem={({ item }) => {
+        return (
+          <ShoppingListItem
+            name={item.name}
+            completed={item.completed}
+            id={item.id}
+            toggleStatusById={toggleStatusById}
+            deleteItemById={deleteItemById}
+          />
+        );
+      }}
+    />
   );
 };
 
@@ -95,6 +103,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 50,
     backgroundColor: theme.colorWhite,
+  },
+  emptyContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 18,
   },
 });
 
